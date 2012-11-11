@@ -1,0 +1,11 @@
+target
+**/target
+.settings
+.project
+.classpath
+**/.settings
+**/.project
+**/.classpath
+images/tests/unknown
+images/unknown
+.metadata
