@@ -6,6 +6,7 @@ target
 **/.settings
 **/.project
 **/.classpath
+generated
 images/tests/unknown
 images/unknown
 .metadata
