@@ -1,18 +1,15 @@
 package br.poker.util;
 
-import org.junit.Test;
-
 import static br.poker.util.Helper.defined;
 import static br.poker.util.Helper.toCents;
-
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import static org.hamcrest.core.Is.is;
+import org.junit.Test;
 
 public class HelperTest {
-	//TODO move this to other layer
 	@Test
 	public void shouldConvertFromStringToCents() {
 		assertThat(toCents("0.02"), is(2));

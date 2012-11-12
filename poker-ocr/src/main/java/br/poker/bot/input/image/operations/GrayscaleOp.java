@@ -1,11 +1,10 @@
 package br.poker.bot.input.image.operations;
 
 import java.awt.image.BufferedImage;
-import static br.poker.util.Helper.*;
 
 public class GrayscaleOp extends AbstractImageOp {
 	public BufferedImage process(BufferedImage image) {
-		if (!defined(image))
+		if (image == null)
 			return image;
 
 		int width = image.getWidth();

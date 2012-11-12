@@ -1,5 +1,9 @@
 package br.poker.ocr;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
 import java.io.File;
 
 import org.junit.Before;
@@ -7,13 +11,7 @@ import org.junit.Test;
 
 import br.poker.bot.input.image.ImageSegment;
 import br.poker.bot.input.image.ImageUtil;
-
-import static br.poker.util.Helper.onlyImages;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
-import static org.hamcrest.core.Is.is;
+import br.poker.util.PNGFilter;
 public class PokerStarsTableOCRTest {
     private TemplateAlphabetSerializer serializer;
 	private TemplateAlphabet general;
@@ -134,7 +132,7 @@ public class PokerStarsTableOCRTest {
     private TemplateAlphabet anAlphabet(String trainningInputFolder, int threshold, boolean isLetterBlack) {
         File trainningFolder = new File(trainningInputFolder);
         TemplateTrainer trainer = new TemplateTrainer();
-        for(File trainningInputImage : trainningFolder.listFiles(onlyImages())) {
+        for(File trainningInputImage : trainningFolder.listFiles(new PNGFilter())) {
             String fileName = trainningInputImage.getName();
             String value = fileName.substring(0, fileName.indexOf(".png"));
             if(value.contains("_at")) {

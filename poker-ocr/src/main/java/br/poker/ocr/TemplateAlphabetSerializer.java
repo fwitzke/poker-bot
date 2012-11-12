@@ -2,7 +2,6 @@ package br.poker.ocr;
 
 import static br.poker.bot.input.image.ImageUtil.loadImage;
 import static br.poker.bot.input.image.ImageUtil.writeImage;
-import static br.poker.util.Helper.onlyImages;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 
@@ -17,6 +16,7 @@ import java.io.IOException;
 import br.poker.bot.input.image.ImageSegment;
 import br.poker.bot.input.image.operations.ImageCompareOp;
 import br.poker.util.Logger;
+import br.poker.util.PNGFilter;
 
 public class TemplateAlphabetSerializer {
 	private final String NAME_COLON = "_colon";
@@ -93,7 +93,7 @@ public class TemplateAlphabetSerializer {
 	public TemplateAlphabet load(File imageFolder) {
 		TemplateAlphabet alphabet = new TemplateAlphabet(new AlphabetProperties(0, true));
 		if (imageFolder != null) {
-			File[] allImages = imageFolder.listFiles(onlyImages());
+			File[] allImages = imageFolder.listFiles(new PNGFilter());
 
 			// load images
 			for (File f : allImages) {
@@ -174,7 +174,7 @@ public class TemplateAlphabetSerializer {
 	}
 
 	private boolean doesImageExistInFolder(BufferedImage unknownWord, File folder) {
-		for(File file : folder.listFiles(onlyImages())) {
+		for(File file : folder.listFiles(new PNGFilter())) {
 			BufferedImage loaded = loadImage(file);
 			if(new ImageCompareOp().equals(loaded, unknownWord)) {
 				return true;
