@@ -1,5 +1,11 @@
 package br.poker.model.table;
 
+import static br.poker.bot.input.image.ImageUtil.loadImage;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -12,12 +18,7 @@ import br.poker.bot.player.Player;
 import br.poker.model.Card;
 import br.poker.model.Hand;
 import br.poker.model.action.Action;
-import br.poker.model.table.PokerTable;
-import br.poker.model.table.PokerTableFactory;
-import br.poker.model.table.TableState;
-import static br.poker.bot.input.image.ImageUtil.loadImage;
-import static org.hamcrest.core.Is.*;
-import static org.junit.Assert.*;
+import br.poker.model.table.pokerstars.PokerStars9PlayersTable;
 
 public class PokerTable_updateTest {
 	private static final int SEATS_NUMBER = 9;
@@ -45,8 +46,8 @@ public class PokerTable_updateTest {
 	}
 
 	@Before
-	public void createTable() {
-		table = PokerTableFactory.createPokerTable();
+	public void createTable() throws Exception {
+		table = new PokerStars9PlayersTable();
 	}
 	
 	@AfterClass

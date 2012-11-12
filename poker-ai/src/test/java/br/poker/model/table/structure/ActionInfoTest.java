@@ -1,5 +1,11 @@
 package br.poker.model.table.structure;
 
+import static br.poker.util.DummyImage.anImage;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,14 +15,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import br.poker.bot.input.image.ImageSegment;
 import br.poker.model.action.Action;
 import br.poker.ocr.TemplateAlphabet;
-import static br.poker.util.DummyImage.anImage;
-
-import static org.junit.Assert.assertThat;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import static org.hamcrest.core.Is.is;
 @RunWith(MockitoJUnitRunner.class)
 public class ActionInfoTest {
 	private static final int X = 0;
@@ -35,7 +33,7 @@ public class ActionInfoTest {
 	@Before
 	public void setup() {
 		info = new ActionInfo(X, Y, WIDTH, HEIGHT);
-		when(tableImage.cut(info)).thenReturn(actionImage);
+		when(tableImage.cut(X, Y, WIDTH, HEIGHT)).thenReturn(actionImage);
 	}
 	
 	@Test
@@ -66,10 +64,8 @@ public class ActionInfoTest {
 		final int HEIGHT = actionImage.getImage().getHeight();
 		final int HALF_HEIGHT = HEIGHT/2;
 
-		BoxInfo upBox = new BoxInfo(X, Y, WIDTH, HALF_HEIGHT);
-		BoxInfo downBox = new BoxInfo(X, Y + HALF_HEIGHT, WIDTH, HALF_HEIGHT);
-		when(actionImage.cut(upBox)).thenReturn(halfUp);
-		when(actionImage.cut(downBox)).thenReturn(halfDown);
+		when(actionImage.cut(X, Y, WIDTH, HALF_HEIGHT)).thenReturn(halfUp);
+		when(actionImage.cut(X, Y + HALF_HEIGHT, WIDTH, HALF_HEIGHT)).thenReturn(halfDown);
 		when(alphabetMock.retrieveWord(actionImage)).thenReturn("");
 		when(alphabetMock.retrieveWord(halfUp)).thenReturn(RAISE_TO);
 		when(alphabetMock.retrieveWord(halfDown)).thenReturn("$0.10");

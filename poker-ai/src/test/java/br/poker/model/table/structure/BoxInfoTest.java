@@ -1,5 +1,10 @@
 package br.poker.model.table.structure;
 
+import static br.poker.util.DummyImage.anImage;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
+
 import java.awt.image.BufferedImage;
 
 import org.junit.Before;
@@ -10,13 +15,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import br.poker.bot.input.image.operations.ImageCutOp;
 import br.poker.ocr.TemplateAlphabet;
-import static br.poker.util.DummyImage.anImage;
-
-import static org.junit.Assert.assertThat;
-
-import static org.mockito.Mockito.when;
-
-import static org.hamcrest.core.Is.is;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoxInfoTest {
@@ -36,7 +34,7 @@ public class BoxInfoTest {
 		tableImage = anImage();
 		textImage = anImage();
 		info = new BoxInfo(X, Y, WIDTH, HEIGHT, cutOpMock);
-		when(cutOpMock.process(tableImage, info)).thenReturn(textImage);
+		when(cutOpMock.process(tableImage, X, Y, WIDTH, HEIGHT)).thenReturn(textImage);
 	}
 	
 	@Test

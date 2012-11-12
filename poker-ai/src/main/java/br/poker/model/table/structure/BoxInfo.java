@@ -27,7 +27,7 @@ public class BoxInfo {
 	}
 
 	public String getText(BufferedImage tableImage, TemplateAlphabet alphabet) {
-		BufferedImage textImage = cut.process(tableImage, this);
+		BufferedImage textImage = cut.process(tableImage, positionX, positionY, width, height);
 		return alphabet.retrieveWord(textImage).trim();
 	}
 

@@ -10,6 +10,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>br.poker.bot</groupId>
+			<artifactId>poker-ocr</artifactId>
+			<version>0.1</version>
+		</dependency>
+	
+		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>
 			<version>3.4.0</version>

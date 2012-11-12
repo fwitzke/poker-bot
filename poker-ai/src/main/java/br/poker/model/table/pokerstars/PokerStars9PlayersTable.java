@@ -1,18 +1,19 @@
 package br.poker.model.table.pokerstars;
 
+import static br.poker.bot.input.image.operations.AbstractImageOp.BLUE;
+import static br.poker.bot.input.image.operations.AbstractImageOp.GREEN;
+import static br.poker.bot.input.image.operations.AbstractImageOp.RED;
+import static br.poker.ocr.TemplateAlphabet.fromFile;
+
 import java.awt.image.BufferedImage;
 
 import br.poker.bot.input.image.operations.ImageCutOp;
 import br.poker.model.table.PokerTable;
 import br.poker.model.table.structure.CardExInfo;
 import br.poker.model.table.structure.PokerTableInfo;
-import static br.poker.bot.input.image.operations.AbstractImageOp.BLUE;
-import static br.poker.bot.input.image.operations.AbstractImageOp.GREEN;
-import static br.poker.bot.input.image.operations.AbstractImageOp.RED;
-import static br.poker.ocr.TemplateAlphabet.fromFile;
 
 public class PokerStars9PlayersTable extends PokerTable {
-    public PokerStars9PlayersTable() throws Exception {
+	public PokerStars9PlayersTable() throws Exception {
         super(9);
         tableInfo = new PokerTableInfo("tables/stars/poker_stars_9_players.xml");
         setAlphabet(fromFile("tables/stars/fonts/general"));

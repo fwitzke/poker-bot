@@ -1,10 +1,10 @@
 package br.poker.model.table.structure;
 
+import static br.poker.util.Helper.defined;
+import static br.poker.util.Helper.toCents;
 import br.poker.bot.input.image.ImageSegment;
 import br.poker.model.action.Action;
 import br.poker.ocr.TemplateAlphabet;
-import static br.poker.util.Helper.defined;
-import static br.poker.util.Helper.toCents;
 
 public class ActionInfo extends BoxInfo {
 	private Action action;
@@ -25,7 +25,7 @@ public class ActionInfo extends BoxInfo {
 		String actionText = "";
         String actionValueText  = "";
 
-        ImageSegment actionImage = tableImage.cut(this); 
+        ImageSegment actionImage = tableImage.cut(getPositionX(), getPositionY(), getWidth(), getHeight()); 
         try { //TODO exception on ExtractLetterSegments, investigate, test and remove try/catch
         	actionText = alphabet.retrieveWord(actionImage).trim();
         } catch (Exception e) {
@@ -40,10 +40,8 @@ public class ActionInfo extends BoxInfo {
             width = actionImage.getImage().getWidth();
             height = actionImage.getImage().getHeight()/2;
 
-            BoxInfo upBoundaries = new BoxInfo(x, y, width, height);
-            BoxInfo downBoundaries = new BoxInfo(x, y+height, width, height);
-			ImageSegment up = actionImage.cut(upBoundaries);
-            ImageSegment down = actionImage.cut(downBoundaries);
+			ImageSegment up = actionImage.cut(x, y, width, height);
+            ImageSegment down = actionImage.cut(x, y+height, width, height);
 
             actionText = alphabet.retrieveWord(up).trim();
             actionValueText = alphabet.retrieveWord(down).trim().replaceAll("\\$", "");
