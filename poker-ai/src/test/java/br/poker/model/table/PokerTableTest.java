@@ -1,5 +1,13 @@
 package br.poker.model.table;
 
+import static java.util.Arrays.asList;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import br.poker.bot.player.Player;
@@ -9,48 +17,19 @@ import br.poker.model.action.Call;
 import br.poker.model.action.Check;
 import br.poker.model.action.Fold;
 import br.poker.model.action.Raise;
-import static br.poker.model.table.GameType.NO_LIMIT_HOLDEM;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import static org.hamcrest.core.Is.is;
 
 public class PokerTableTest {
-	private static final String TABLE_NAME = "TEST TABLE";
-	private static final String US_DOLLAR = "USD";
-	private static final int ONE_CENT = 1;
-	private static final int TWO_CENTS = 2;
-	private static final int POT = 30;
 	private static final int FIRST_CHAIR = 1;
 	private static final int THIRD_CHAIR = 3;
+	private PokerTable table;
 
-	@Test
-	public void shouldCreateA9PlayerTable() {
-		PokerTable table = aTable();
-		table.setGameType(NO_LIMIT_HOLDEM);
-		table.setTableName(TABLE_NAME);
-		table.setSB(ONE_CENT);
-		table.setBB(TWO_CENTS);
-		table.setTotalPot(POT);
-		table.setCurrency(US_DOLLAR);
-
-		assertThat(table.getTableName(), is(TABLE_NAME));
-		assertThat(table.getGameType(), is(NO_LIMIT_HOLDEM));
-		assertThat(table.getSeatsNumber(), is(9));
-		assertThat(table.getSittingPlayers(), is(0));
-		assertThat(table.getSB(), is(ONE_CENT));
-		assertThat(table.getBB(), is(TWO_CENTS));
-		assertThat(table.getTotalPot(), is(POT));
-		assertThat(table.getCurrency(), is(US_DOLLAR));
+	@Before
+	public void setup() {
+		table = PokerTableFactory.createPokerTable("POKERSTARS", 9);
 	}
-
+	
 	@Test
 	public void shouldKnowWherePlayersAreSitting() {
-		PokerTable table = aTable();
-
 		assertThat(table.getSittingPlayers(), is(0));
 		assertTrue(table.isPositionFree(FIRST_CHAIR));
 		assertTrue(table.isPositionFree(THIRD_CHAIR));
@@ -66,7 +45,6 @@ public class PokerTableTest {
 
 	@Test
 	public void shoulDealPlayerCards() {
-		PokerTable table = aTable();
 		Player john = new Player();
 		Player paul = new Player();
 
@@ -99,7 +77,6 @@ public class PokerTableTest {
 
 	@Test
 	public void shouldAllowPlayersToBet() {
-		PokerTable table = aTable();
 		table.setSB(5);
 		table.setBB(10);
 
@@ -136,7 +113,6 @@ public class PokerTableTest {
 
 	@Test
 	public void playersShouldNotBeOnCurrentHandAfterFolding() {
-		PokerTable table = aTable();
 		Player john = new Player();
 		Player paul = new Player();
 		Player carl = new Player();
@@ -157,7 +133,16 @@ public class PokerTableTest {
 		assertThat(table.getPlayersOnCurrentHand(), is(1));
 	}
 	
-	private PokerTable aTable() {
-		return PokerTableFactory.createPokerTable("POKERSTARS", 9);
+	@Test
+	public void itTakesPokerTableSnapshot() {
+		Player anyone = new Player("anyone", 30);
+		
+		table.setSB(5);
+		table.setBB(10);
+		table.seat(anyone, 0);
+		
+		PokerTableSnapshot snapshot = new PokerTableSnapshot(new BettingStructure(5, 10), asList(new PlayerInfo(0, 30)));
+		
+		assertThat(table.takeSnapshot(), is(snapshot));
 	}
 }

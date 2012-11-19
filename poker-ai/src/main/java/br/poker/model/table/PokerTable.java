@@ -439,6 +439,15 @@ public abstract class PokerTable {
         return this;
 	}
 	
+	public PokerTableSnapshot takeSnapshot() {
+		List<PlayerInfo> playersInfo = new ArrayList<PlayerInfo>();
+		for(int i=0; i < players.length; i++)
+			if(players[i] != null)
+				playersInfo.add(new PlayerInfo(i, players[i].getStack()));
+		
+		return new PokerTableSnapshot(new BettingStructure(SB, BB), playersInfo);
+	}
+	
 	public ActionInfo getActionInfo(Action action) {
 		ActionInfo actionInfo = tableInfo.getActionInfo(0);
 		if(action instanceof Fold)

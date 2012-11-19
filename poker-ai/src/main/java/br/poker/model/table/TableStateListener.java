@@ -12,11 +12,6 @@ public class TableStateListener {
 	private static Map<Integer, PlayerInfo> playersInfo = new HashMap<Integer, PlayerInfo>();
 	private TableState tableState;
 
-	class PlayerInfo {
-		Integer stack;
-		Boolean isOnHand;
-	}
-	
 	public void before(PokerTable table) {
 		storePlayerActionInfo(table);
 		tableState = table.getTableState();

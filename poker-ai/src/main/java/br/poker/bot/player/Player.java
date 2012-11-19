@@ -17,6 +17,11 @@ public class Player {
 		setName(name);
 	}
 
+	public Player(String name, int stack) {
+		this(name);
+		setStack(stack);
+	}
+
 	public String getName() {
         return name;
     }
