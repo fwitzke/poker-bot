@@ -16,9 +16,17 @@ public class BettingStructure {
 	public int getSmallBlind() {
 		return smallBlind;
 	}
+	
+	public void setSmallBlind(int smallBlind) {
+		this.smallBlind = smallBlind;
+	}
 
 	public int getBigBlind() {
 		return bigBlind;
+	}
+	
+	public void setBigBlind(int bigBlind) {
+		this.bigBlind = bigBlind;
 	}
 
 	public int getAnte() {

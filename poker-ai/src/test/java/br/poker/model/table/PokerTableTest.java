@@ -135,13 +135,13 @@ public class PokerTableTest {
 	
 	@Test
 	public void itTakesPokerTableSnapshot() {
+		BettingStructure fiveTen = new BettingStructure(5, 10);
 		Player anyone = new Player("anyone", 30);
 		
-		table.setSB(5);
-		table.setBB(10);
+		table.setBettingStructure(fiveTen);
 		table.seat(anyone, 0);
 		
-		PokerTableSnapshot snapshot = new PokerTableSnapshot(new BettingStructure(5, 10), asList(new PlayerInfo(0, 30)));
+		PokerTableSnapshot snapshot = new PokerTableSnapshot(fiveTen, asList(new PlayerInfo(0, 30)));
 		
 		assertThat(table.takeSnapshot(), is(snapshot));
 	}

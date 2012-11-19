@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import br.poker.bot.output.OutputHandler;
 import br.poker.bot.player.BotPlayer;
 import br.poker.model.action.Action;
+import br.poker.model.table.BettingStructure;
 import br.poker.model.table.PokerTable;
 import br.poker.model.table.structure.ActionInfo;
 import br.poker.util.PokerStarsTableMock;
@@ -74,8 +75,7 @@ public class TableControllerTest {
 		assertNotNull(table);
 		assertThat(controller.getTotalCaptures(), is(1));
 		assertThat(table.getGameType(), is(NO_LIMIT_HOLDEM));
-		assertThat(table.getSB(), is(5));
-		assertThat(table.getBB(), is(10));
+		assertThat(table.getBettingStructure(), is(new BettingStructure(5, 10)));
 	}
 
 	@Test

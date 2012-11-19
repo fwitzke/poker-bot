@@ -25,9 +25,8 @@ import static br.poker.util.Helper.toCents;
 
 public abstract class PokerTable {
 	private String name;
+	private BettingStructure bettingStructure;
     private int seatsNumber;
-    private int SB; //small blind
-    private int BB; //big blind
     private int totalPot;
     private Player[] players;
     private Deck deck;
@@ -58,7 +57,16 @@ public abstract class PokerTable {
         board = new ArrayList<Card>();
         handHistory = new HandHistory();
         stateListener = new TableStateListener();
+        bettingStructure = new BettingStructure(0, 0);
     }
+    
+	public void setBettingStructure(BettingStructure bettinStructure) {
+		this.bettingStructure = bettinStructure;
+	}
+	
+	public BettingStructure getBettingStructure() {
+		return bettingStructure;
+	}
 
     public void setTableName(String tableName) {
         this.name = tableName;
@@ -72,20 +80,38 @@ public abstract class PokerTable {
         return seatsNumber;
     }
 
+    /**
+     * use betting structure instead
+     * @return
+     */
+    @Deprecated
     public int getSB() {
-        return SB;
+        return bettingStructure.getSmallBlind();
     }
 
+    /**
+     * use betting structure instead
+     */
+    @Deprecated
     public void setSB(int sB) {
-        SB = sB;
+        bettingStructure.setSmallBlind(sB);
     }
 
+    /**
+     * use betting structure instead
+     * @return
+     */
+    @Deprecated
     public int getBB() {
-        return BB;
+        return bettingStructure.getBigBlind();
     }
-
-    public void setBB(int bB) {
-        BB = bB;
+    
+    /**
+     * use betting structure instead
+     */
+    @Deprecated
+    public void setBB(int bigBlind) {
+        bettingStructure.setBigBlind(bigBlind);
     }
 
     public void setTotalPot(int pot) {
@@ -445,7 +471,7 @@ public abstract class PokerTable {
 			if(players[i] != null)
 				playersInfo.add(new PlayerInfo(i, players[i].getStack()));
 		
-		return new PokerTableSnapshot(new BettingStructure(SB, BB), playersInfo);
+		return new PokerTableSnapshot(bettingStructure, playersInfo);
 	}
 	
 	public ActionInfo getActionInfo(Action action) {
@@ -471,7 +497,7 @@ public abstract class PokerTable {
 	public String toString() {
 		String res= "";
 		
-		res += "Table: " + name + ". Blinds: " + SB + "/" + BB + "\n";
+		res += "Table: " + name + ". Blinds: " + getSB() + "/" + getBB() + "\n";
 		for(int i=0; i < players.length; i++) {
 			Player player = players[i];
 			if(player!=null)
