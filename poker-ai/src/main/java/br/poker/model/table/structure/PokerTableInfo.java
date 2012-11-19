@@ -4,7 +4,6 @@ import static br.poker.util.XmlUtil.getTagValue;
 import static java.lang.Integer.parseInt;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +31,7 @@ public class PokerTableInfo {
         pokerPlayerInfoList = new ArrayList<PokerPlayerInfo>();
         actionInfos = new ActionInfo[3];
         
-        URL resource = getClass().getClassLoader().getResource(configFileName);
-        File stream = new File(resource.toURI());
+        File stream = new File(configFileName);
         
         try {
             Logger.log("Parsing table model: " + configFileName);

@@ -6,8 +6,6 @@ import static java.util.Arrays.asList;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.Serializable;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +17,7 @@ public class TemplateAlphabet implements Serializable {
 	private static final long serialVersionUID = -1401391791912994410L;
 	private AlphabetProperties properties;
 	private List<TemplateCharacter> templateCharacters;
-	private static TemplateAlphabetSerializer serializer; // TODO remove it,
-															// move logic to
-															// Serializer
+	private static TemplateAlphabetSerializer serializer; // TODO remove it, move logic to Serializer
 
 	public TemplateAlphabet(AlphabetProperties properties) {
 		templateCharacters = new ArrayList<TemplateCharacter>();
@@ -30,18 +26,15 @@ public class TemplateAlphabet implements Serializable {
 
 	public static TemplateAlphabet fromFile(File folder) {
 		if (!folder.exists())
-			throw new RuntimeException("Problem loading alphabet " + folder
-					+ ".");
+			throw new RuntimeException("Problem loading alphabet " + folder + ".");
 		serializer = new TemplateAlphabetSerializer();
 		return serializer.load(folder);
 	}
 
 	public static TemplateAlphabet fromFile(String alphabetFolder) {
 		try {
-			URL folderURL = TemplateAlphabet.class.getClassLoader().getResource(alphabetFolder);
-			return fromFile(new File(folderURL.toURI()));
-		} catch (URISyntaxException e) {
-			//TODO handle it properly
+			return fromFile(new File(alphabetFolder));
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println(e);
 			return null;
