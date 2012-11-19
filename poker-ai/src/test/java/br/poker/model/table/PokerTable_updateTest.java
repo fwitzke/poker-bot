@@ -198,7 +198,7 @@ public class PokerTable_updateTest {
         assertThat(table.getSB(), is(1));
         assertThat(table.getBB(), is(2));
         assertThat(table.getCurrency(), is("USD"));
-        assertThat(table.getGameType(), is(PokerTable.NO_LIMIT_HOLDEM));
+        assertThat(table.getGameType(), is(GameType.NO_LIMIT_HOLDEM));
     }
 
     @Test
@@ -210,7 +210,7 @@ public class PokerTable_updateTest {
         assertThat(table.getSB(), is(5));
         assertThat(table.getBB(), is(10));
         assertThat(table.getCurrency(), is("USD"));
-        assertThat(table.getGameType(), is(PokerTable.NO_LIMIT_HOLDEM));
+        assertThat(table.getGameType(), is(GameType.NO_LIMIT_HOLDEM));
     }
 
     @Test
@@ -222,6 +222,6 @@ public class PokerTable_updateTest {
         assertThat(table.getSB(), is(20000));
         assertThat(table.getBB(), is(40000));
         assertThat(table.getCurrency(), is("Play Money"));
-        assertThat(table.getGameType(), is(PokerTable.LIMIT_HOLDEM));
+        assertThat(table.getGameType(), is(GameType.LIMIT_HOLDEM));
     }
 }

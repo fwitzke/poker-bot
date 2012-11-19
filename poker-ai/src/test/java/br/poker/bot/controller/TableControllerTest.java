@@ -18,7 +18,7 @@ import br.poker.model.table.PokerTable;
 import br.poker.model.table.structure.ActionInfo;
 import br.poker.util.PokerStarsTableMock;
 import static br.poker.bot.input.image.ImageUtil.loadImage;
-import static br.poker.model.table.PokerTable.NO_LIMIT_HOLDEM;
+import static br.poker.model.table.GameType.NO_LIMIT_HOLDEM;
 import static java.util.Arrays.asList;
 
 import static org.junit.Assert.assertFalse;

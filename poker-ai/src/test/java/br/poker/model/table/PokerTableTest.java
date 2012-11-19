@@ -9,7 +9,7 @@ import br.poker.model.action.Call;
 import br.poker.model.action.Check;
 import br.poker.model.action.Fold;
 import br.poker.model.action.Raise;
-import static br.poker.model.table.PokerTable.NO_LIMIT_HOLDEM;
+import static br.poker.model.table.GameType.NO_LIMIT_HOLDEM;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

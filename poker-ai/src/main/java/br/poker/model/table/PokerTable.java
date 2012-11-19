@@ -24,7 +24,6 @@ import static br.poker.util.Helper.defined;
 import static br.poker.util.Helper.toCents;
 
 public abstract class PokerTable {
-    
 	private String name;
     private int seatsNumber;
     private int SB; //small blind
@@ -33,7 +32,7 @@ public abstract class PokerTable {
     private Player[] players;
     private Deck deck;
     private List<Card> board;
-    private int gameType;
+    private GameType gameType;
     private String currency;
     private TableState tableState;
     private boolean actionRequired;
@@ -41,20 +40,15 @@ public abstract class PokerTable {
     protected PokerTableInfo tableInfo;
     protected TemplateAlphabet alphabet, alphabetDeck, alphabetActions;
     
+    private TableStateListener stateListener;
 	private HandHistory handHistory;
 	private static final int MY_POSITION = 4; //TODO REMOVE HARDCODING
     private static final String MY_NAME = "pigroxalot"; //TODO REMOVE HARDCODING
     
-    //GameType constants
-    public static final int LIMIT_HOLDEM     = 1000;
-    public static final int NO_LIMIT_HOLDEM  = 1001;
-    public static final int POT_LIMIT_HOLDEM = 1002;
-    
     public abstract boolean isPlayerOnHand(int playerPosition, BufferedImage tableImage);
     public abstract boolean isVisible(BufferedImage tableImage);
 
-    //TODO include the concept of HAND HISTORY
-    //     add a current and hand history collection to store actions
+    //TODO include the concept of HAND HISTORY add a current and hand history collection to store actions
     public PokerTable(int seatsNumber) {
     	this.seatsNumber = seatsNumber;
         setTotalPot(0);
@@ -63,6 +57,7 @@ public abstract class PokerTable {
         deck = new Deck();
         board = new ArrayList<Card>();
         handHistory = new HandHistory();
+        stateListener = new TableStateListener();
     }
 
     public void setTableName(String tableName) {
@@ -101,8 +96,12 @@ public abstract class PokerTable {
         return totalPot;
     }
 
-    public int getGameType() {
+    public GameType getGameType() {
         return gameType;
+    }
+
+    public void setGameType(GameType gameType) {
+        this.gameType = gameType;
     }
 
     public String getCurrency() {
@@ -111,10 +110,6 @@ public abstract class PokerTable {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public void setGameType(int gameType) {
-        this.gameType = gameType;
     }
 
     public boolean isPositionFree(int pos) {
@@ -275,11 +270,14 @@ public abstract class PokerTable {
             Logger.error("Table is not visible");
             return false;
         }
+		
+		stateListener.before(this);
         updatePlayersInfo(tableImage);
         updateTableInfo(tableImage);
         updateTableState();
         updateMyInfo(tableImage);
         updateAvailableActionsInfo(tableImage);
+        stateListener.after(this);
         return true;
 	}
 	
@@ -434,9 +432,9 @@ public abstract class PokerTable {
             String gameType = titleInfoArray[2].trim();
             Logger.debug("GameType: " + gameType);
             if("No Limit Hold'em".equals(gameType))
-                setGameType(PokerTable.NO_LIMIT_HOLDEM);
+                setGameType(GameType.NO_LIMIT_HOLDEM);
             else if("Limit Hold'em".equals(gameType))
-                setGameType(PokerTable.LIMIT_HOLDEM);
+                setGameType(GameType.LIMIT_HOLDEM);
         }
         return this;
 	}
